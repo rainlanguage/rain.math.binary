@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: CAL
-pragma solidity ^0.8.18;
+pragma solidity ^0.8.25;
 
 /// @dev 010101... for ctpop
 uint256 constant CTPOP_M1 = 0x5555555555555555555555555555555555555555555555555555555555555555;
