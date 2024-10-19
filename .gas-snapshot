@@ -1,0 +1,3 @@
+LibCtPopTest:testCTPOPReference(uint256) (runs: 2048, μ: 3604, ~: 3605)
+LibCtPopTest:testCTPOPShuffled(uint8,bytes32) (runs: 2048, μ: 149131, ~: 149131)
+LibCtPopTest:testCTPOPUnshuffled(uint8) (runs: 2048, μ: 4146, ~: 4146)
