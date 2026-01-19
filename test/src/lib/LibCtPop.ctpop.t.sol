@@ -3,7 +3,6 @@
 pragma solidity =0.8.25;
 
 import {Test} from "forge-std/Test.sol";
-
 import {LibCtPop} from "src/lib/LibCtPop.sol";
 
 /// @title LibCtPopTest
@@ -13,7 +12,7 @@ import {LibCtPop} from "src/lib/LibCtPop.sol";
 contract LibCtPopTest is Test {
     /// We should be able to count the number of bits set when we simply set a
     /// sequence of bits from the low bit to some mid bit.
-    function testCTPOPUnshuffled(uint8 n) external pure {
+    function testCtPopUnshuffled(uint8 n) external pure {
         uint256 x = (1 << n) - 1;
         uint256 ct = LibCtPop.ctpop(x);
         assertEq(n, ct);
@@ -22,7 +21,7 @@ contract LibCtPopTest is Test {
     }
 
     /// The distribution of bits in the underlying `uint256` should not matter.
-    function testCTPOPShuffled(uint8 n, bytes32 rand) external pure {
+    function testCtPopShuffled(uint8 n, bytes32 rand) external pure {
         uint256 x = (1 << n) - 1;
         uint256 y = 0;
 
@@ -44,8 +43,32 @@ contract LibCtPopTest is Test {
         assertEq(ct, ctSlow);
     }
 
-    function testCTPOPReference(uint256 x) external pure {
+    function testCtPopReference(uint256 x) external pure {
         uint256 ct = LibCtPop.ctpop(x);
+        uint256 ctSlow = LibCtPop.ctpopSlow(x);
+        assertEq(ct, ctSlow);
+    }
+
+    function testCtPop256EdgeCase() external pure {
+        uint256 x = type(uint256).max;
+        uint256 ct = LibCtPop.ctpop(x);
+        assertEq(256, ct);
+        uint256 ctSlow = LibCtPop.ctpopSlow(x);
+        assertEq(ct, ctSlow);
+    }
+
+    function testCtPop0() external pure {
+        uint256 x = 0;
+        uint256 ct = LibCtPop.ctpop(x);
+        assertEq(0, ct);
+        uint256 ctSlow = LibCtPop.ctpopSlow(x);
+        assertEq(ct, ctSlow);
+    }
+
+    function testCtPop1() external pure {
+        uint256 x = 1;
+        uint256 ct = LibCtPop.ctpop(x);
+        assertEq(1, ct);
         uint256 ctSlow = LibCtPop.ctpopSlow(x);
         assertEq(ct, ctSlow);
     }
