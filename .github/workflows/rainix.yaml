@@ -1,6 +1,5 @@
 name: Rainix CI
 on: [push]
-
 jobs:
   rainix:
     strategy:
@@ -14,9 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          submodules: recursive
           fetch-depth: 0
-
       - uses: nixbuild/nix-quick-install-action@v30
         with:
           nix_conf: |
@@ -33,7 +30,6 @@ jobs:
           # before trying to save a new cache
           # 1G = 1073741824
           gc-max-store-size-linux: 1G
-
-      - run: nix develop -c rainix-sol-prelude
+      - run: nix develop -c forge soldeer install
       - name: Run ${{ matrix.task }}
         run: nix develop -c ${{ matrix.task }}
