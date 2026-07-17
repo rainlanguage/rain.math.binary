@@ -1,0 +1,14 @@
+{
+  "auditedAt": "2026-07-17T16:34:10Z",
+  "auditedCommit": "336405eb3411369b578b2739708b42ef927e4215",
+  "files": [
+    "src/lib/LibCtPop.sol",
+    "test/src/lib/LibCtPop.ctpop.t.sol"
+  ],
+  "countsByLanguage": {
+    "solidity": 2,
+    "rust": 0,
+    "typescript": 0,
+    "svelte": 0
+  }
+}
