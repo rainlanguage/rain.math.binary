@@ -18,12 +18,16 @@ uint256 constant CTPOP_M32 = 0x00000000FFFFFFFF00000000FFFFFFFF00000000FFFFFFFF0
 uint256 constant CTPOP_M64 = 0x0000000000000000FFFFFFFFFFFFFFFF0000000000000000FFFFFFFFFFFFFFFF;
 /// @dev 128 bits alternating for ctpop
 uint256 constant CTPOP_M128 = 0x00000000000000000000000000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
-/// @dev 1 bytes for ctpop
+/// @dev Every byte set to 0x01 for ctpop; multiplying a value whose bytes hold
+/// per-byte bit counts by this constant sums all those counts into the top
+/// byte, which the final `>> 248` extracts.
 uint256 constant CTPOP_H01 = 0x0101010101010101010101010101010101010101010101010101010101010101;
 
 library LibCtPop {
     /// Optimised version of ctpop.
     /// https://en.wikipedia.org/wiki/Hamming_weight
+    /// @param x The value to count set bits in.
+    /// @return The number of bits set in `x`.
     function ctpop(uint256 x) internal pure returns (uint256) {
         // This edge case is not handled by the algorithm below.
         if (x == type(uint256).max) {
@@ -43,6 +47,8 @@ library LibCtPop {
     /// It should be obviously correct by visual inspection, referencing the
     /// wikipedia article.
     /// https://en.wikipedia.org/wiki/Hamming_weight
+    /// @param x The value to count set bits in.
+    /// @return The number of bits set in `x`.
     function ctpopSlow(uint256 x) internal pure returns (uint256) {
         unchecked {
             x = (x & CTPOP_M1) + ((x >> 1) & CTPOP_M1);
